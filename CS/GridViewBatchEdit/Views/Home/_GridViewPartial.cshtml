@@ -1,0 +1,73 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "Home", Action = "GridViewPartial" };
+
+        settings.KeyFieldName = "ID";
+
+        settings.Columns.Add("C1");
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "C2";
+            column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        });
+        settings.Columns.Add("C3");
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "C4";
+            column.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Month";
+            column.ColumnType = MVCxGridViewColumnType.DateEdit;
+            column.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
+            column.SettingsHeaderFilter.Mode = GridHeaderFilterMode.CheckedList;
+        });
+        settings.CustomUnboundColumnData = (sender, e) =>
+        {
+            if (e.Column.FieldName == "Month")
+            {
+                DateTime value = (DateTime)e.GetListSourceFieldValue("C5");
+                e.Value = value.Month;
+            }
+        };
+
+        settings.CustomColumnDisplayText = (sender, e) =>
+        {
+            if (e.Column.FieldName == "Month")
+            {
+                DateTime realValue = ((DateTime)e.GetFieldValue("C5"));
+                e.DisplayText = realValue.ToString("dd MMM yyyy");
+            }
+        };
+
+        settings.HeaderFilterFillItems = (sender, e) =>
+        {
+            if (e.Column.FieldName == "Month")
+            {
+                e.Values.Clear();
+                e.AddValue("January", "1");
+                e.AddValue("Feburary", "2");
+                e.AddValue("March", "3");
+                e.AddValue("April", "4");
+                e.AddValue("May", "5");
+                e.AddValue("June", "6");
+                e.AddValue("July", "7");
+                e.AddValue("August", "8");
+                e.AddValue("September", "9");
+                e.AddValue("October", "10");
+                e.AddValue("November", "11");
+                e.AddValue("December", "12");
+            }
+        };
+        settings.Settings.ShowHeaderFilterButton = true;
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
