@@ -1,3 +1,14 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [FilterConfig.cs](./CS/GridViewBatchEdit/App_Start/FilterConfig.cs)
+* [RouteConfig.cs](./CS/GridViewBatchEdit/App_Start/RouteConfig.cs)
+* [WebApiConfig.cs](./CS/GridViewBatchEdit/App_Start/WebApiConfig.cs)
+* [HomeController.cs](./CS/GridViewBatchEdit/Controllers/HomeController.cs)
+* [Model.cs](./CS/GridViewBatchEdit/Models/Model.cs)
+* **[_GridViewPartial.cshtml](./CS/GridViewBatchEdit/Views/Home/_GridViewPartial.cshtml)**
+* [Index.cshtml](./CS/GridViewBatchEdit/Views/Home/Index.cshtml)
+<!-- default file list end -->
 # GridView - How to filter dates by the month
 
 
