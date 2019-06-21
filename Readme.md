@@ -10,6 +10,9 @@
 * [Index.cshtml](./CS/GridViewBatchEdit/Views/Home/Index.cshtml)
 <!-- default file list end -->
 # GridView - How to filter dates by the month
+<!-- run online -->
+**[[Run Online]](https://codecentral.devexpress.com/t328882)**
+<!-- run online end -->
 
 
 <p>By default, GridView uses cell values for filtering. At the same time, the control can display custom text in cells. The solution is based on these aspects.</p>
