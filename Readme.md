@@ -11,7 +11,7 @@
 <!-- default file list end -->
 # GridView - How to filter dates by the month
 <!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/t328882)**
+**[[Run Online]](https://codecentral.devexpress.com/t328882/)**
 <!-- run online end -->
 
 
