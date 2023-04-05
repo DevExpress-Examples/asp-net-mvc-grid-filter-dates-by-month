@@ -11,7 +11,7 @@ This example demonstrates how to create an unbound column, populate it with data
 
 Follow the steps below to filter dates by month:
 
-1. Add an [unbound column](https://docs.devexpress.com/AspNetMvc/16859/components/grid-view/data-representation-basics/columns/unbound-columns) that stores month numbers. To enable this behavior, set the column's [UnboundType]() to `Integer`.
+1. Add an [unbound column](https://docs.devexpress.com/AspNetMvc/16859/components/grid-view/data-representation-basics/columns/unbound-columns) that stores month numbers. To enable this behavior, set the column's [UnboundType](https://docs.devexpress.com/AspNet/DevExpress.Web.GridViewDataColumn.UnboundType) to `Integer`.
 
     ```csharp
     settings.Columns.Add(column => {
