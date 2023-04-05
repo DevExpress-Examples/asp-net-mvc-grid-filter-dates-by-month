@@ -1,103 +1,78 @@
-<!-- default badges list -->
-![](https://img.shields.io/endpoint?url=https://codecentral.devexpress.com/api/v1/VersionRange/128550079/15.2.4%2B)
-[![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T328882)
-[![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
-<!-- default badges end -->
-<!-- default file list -->
-*Files to look at*:
-
-* [FilterConfig.cs](./CS/GridViewBatchEdit/App_Start/FilterConfig.cs)
-* [RouteConfig.cs](./CS/GridViewBatchEdit/App_Start/RouteConfig.cs)
-* [WebApiConfig.cs](./CS/GridViewBatchEdit/App_Start/WebApiConfig.cs)
-* [HomeController.cs](./CS/GridViewBatchEdit/Controllers/HomeController.cs)
-* [Model.cs](./CS/GridViewBatchEdit/Models/Model.cs)
-* **[_GridViewPartial.cshtml](./CS/GridViewBatchEdit/Views/Home/_GridViewPartial.cshtml)**
-* [Index.cshtml](./CS/GridViewBatchEdit/Views/Home/Index.cshtml)
-<!-- default file list end -->
-# GridView - How to filter dates by the month
+# Grid View for ASP.NET MVC - How to filter dates by month
 <!-- run online -->
 **[[Run Online]](https://codecentral.devexpress.com/t328882/)**
 <!-- run online end -->
 
+This example demonstrates how to create an unbound column, populate it with data from a data source, and customize header filter items. 
 
-<p>By default, GridView uses cell values for filtering. At the same time, the control can display custom text in cells. The solution is based on these aspects.</p>
-<p>1. Add an <a href="https://documentation.devexpress.com/#AspNet/CustomDocument16859">unbound columns</a> to display dates:</p>
+![Filter Dates by Month](filterDates.png)
 
+## Overview
 
-```cs
-settings.Columns.Add(column =>
-{
-    column.FieldName = "Month";
-    column.ColumnType = MVCxGridViewColumnType.DateEdit;
-    column.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
-    column.SettingsHeaderFilter.Mode = GridHeaderFilterMode.CheckedList;
-})
+Follow the steps below to filter dates by month:
 
-```
+1. Add an [unbound column](https://docs.devexpress.com/AspNetMvc/16859/components/grid-view/data-representation-basics/columns/unbound-columns) that stores month numbers. To enable this behavior, set the column's [UnboundType]() to `Integer`.
 
+    ```csharp
+    settings.Columns.Add(column => {
+        column.FieldName = "Month";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
+        column.SettingsHeaderFilter.Mode = GridHeaderFilterMode.CheckedList;
+    })
+    ```
 
-<p> Note, its <em>UnboundType</em> is <em>Integer</em>, but not <em>DateTime</em>. The column will contain the numbers of months.</p>
-<p>Handle the <a href="https://documentation.devexpress.com/#AspNet/DevExpressWebASPxGridView_CustomUnboundColumnDatatopic">CustomUnboundColumnData</a> event to populate column cells by month numbers:</p>
+2. Handle the grid's [CustomUnboundColumnData](https://docs.devexpress.com/AspNetMvc/DevExpress.Web.Mvc.GridViewSettings.CustomUnboundColumnData) event. In the handler, get date values from the specified bound column and populate the unbound column cells with month numbers.
 
+    ```cs
+    settings.CustomUnboundColumnData = (sender, e) => {
+        if (e.Column.FieldName == "Month") {
+            DateTime value = (DateTime)e.GetListSourceFieldValue("C5");
+            e.Value = value.Month;
+        }
+    };
+    ```
 
-```cs
-settings.CustomUnboundColumnData = (sender, e) =>
-{
-    if (e.Column.FieldName == "Month")
-    {
-        DateTime value = (DateTime)e.GetListSourceFieldValue("C5");
-        e.Value = value.Month;
-    }
-};
+3. To display full dates in the unbound column, handle the grid's [CustomColumnDisplayText](https://docs.devexpress.com/AspNetMvc/DevExpress.Web.Mvc.GridViewSettings.CustomColumnDisplayText) event and specify its [DisplayText](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxGridColumnDisplayTextEventArgs.DisplayText) argument property.
 
-```
+    ```cs
+    settings.CustomColumnDisplayText = (sender, e) => {
+        if (e.Column.FieldName == "Month") {
+            DateTime realValue = ((DateTime)e.GetFieldValue("C5"));
+            e.DisplayText = realValue.ToString("dd MMM yyyy");
+        }
+    };
+    ```
 
-
-<p> The <em>C5</em> field is a real column in GridView. If you do not need to show it to an end-user, you can hide this column. However, it is required for getting unbound column data.</p>
-<p><br>Now the unbound column displays month values. However, if you wish to show an end-user full dates, handle the <a href="https://documentation.devexpress.com/#AspNet/DevExpressWebASPxGridView_CustomColumnDisplayTexttopic">CustomColumnDisplayText</a> event and implement the following handler:</p>
-
-
-```cs
-settings.CustomColumnDisplayText = (sender, e) =>
-{
-    if (e.Column.FieldName == "Month")
-    {
-        DateTime realValue = ((DateTime)e.GetFieldValue("C5"));
-        e.DisplayText = realValue.ToString("dd MMM yyyy");
-    }
-};
-
-```
+4. Handle the grid's [HeaderFilterFillItems](https://docs.devexpress.com/AspNetMvc/DevExpress.Web.Mvc.GridViewSettings.HeaderFilterFillItems) event to add custom header filter items based specified by the month number.
 
 
-<p> The data is returned from the bound <em>C5 </em>data column, but shown in the unbound column.</p>
-<p><br>Finally, update the Header Filter items as demonstrated below:</p>
+    ```cs
+    settings.HeaderFilterFillItems = (sender, e) => {
+        if (e.Column.FieldName == "Month") {
+            e.Values.Clear();
+            e.AddValue("January", "1");
+            e.AddValue("February", "2");
+            e.AddValue("March", "3");
+            e.AddValue("April", "4");
+            e.AddValue("May", "5");
+            e.AddValue("June", "6");
+            e.AddValue("July", "7");
+            e.AddValue("August", "8");
+            e.AddValue("September", "9");
+            e.AddValue("October", "10");
+            e.AddValue("November", "11");
+            e.AddValue("December", "12");
+        }
+    };
+    ```
 
+## Files to Review
 
-```cs
-settings.HeaderFilterFillItems = (sender, e) =>
-{
-    if (e.Column.FieldName == "Month")
-    {
-        e.Values.Clear();
-        e.AddValue("January", "1");
-        e.AddValue("February", "2");
-        e.AddValue("March", "3");
-        e.AddValue("April", "4");
-        e.AddValue("May", "5");
-        e.AddValue("June", "6");
-        e.AddValue("July", "7");
-        e.AddValue("August", "8");
-        e.AddValue("September", "9");
-        e.AddValue("October", "10");
-        e.AddValue("November", "11");
-        e.AddValue("December", "12");
-    }
-};
-```
+* [_GridViewPartial.cshtml](./CS/GridViewBatchEdit/Views/Home/_GridViewPartial.cshtml)
+* [Index.cshtml](./CS/GridViewBatchEdit/Views/Home/Index.cshtml)
 
+## Documentation
 
-
-<br/>
-
-
+* [Unbound Columns](https://docs.devexpress.com/AspNetMvc/16859/components/grid-view/data-representation-basics/columns/unbound-columns)
+* [Header Filter](https://docs.devexpress.com/AspNetMvc/120468/components/grid-view/data-shaping-and-manipulation/filtering/header-filter)
