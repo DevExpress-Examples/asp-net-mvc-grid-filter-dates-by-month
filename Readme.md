@@ -4,9 +4,6 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
 # Grid View for ASP.NET MVC - How to filter dates by month
-<!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/128550079/)**
-<!-- run online end -->
 
 This example demonstrates how to create an unbound column, populate it with data from a data source, and customize header filter items. 
 
