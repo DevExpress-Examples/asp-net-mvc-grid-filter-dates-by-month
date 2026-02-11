@@ -80,7 +80,7 @@ Follow the steps below to filter dates by month:
 * [Unbound Columns](https://docs.devexpress.com/AspNetMvc/16859/components/grid-view/data-representation-basics/columns/unbound-columns)
 * [Header Filter](https://docs.devexpress.com/AspNetMvc/120468/components/grid-view/data-shaping-and-manipulation/filtering/header-filter)
 <!-- feedback -->
-## Does This Example Address Your Development Requirements/Objectives?
+## Does this example address your development requirements/objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=asp-net-mvc-grid-filter-dates-by-month&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=asp-net-mvc-grid-filter-dates-by-month&~~~was_helpful=no)
 
